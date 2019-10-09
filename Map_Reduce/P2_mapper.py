@@ -5,12 +5,21 @@
 
 import sys, re
 
+the_url = None
+
 for line in sys.stdin:
 
     line  = re.sub(r'^\W+|\W+$','', line)
-    words = re.findall(r'(https?://\S+)', line)
 
-    for word in words:
-        print word + "\t1"
+    get = False
+    for word in line.split(' '):
+        if get == True:
+	   the_url = word
+	   break
+	if word == '"GET':
+	   get = True
 
+    if the_url is not None:
+	print the_url + "\t1"
+	the_url = None
 
